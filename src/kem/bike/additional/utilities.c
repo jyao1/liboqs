@@ -22,15 +22,27 @@ print_newline(IN const uint64_t qw_pos) {
 #endif
 }
 
+#if defined(_MSC_EXTENSIONS)
+unsigned int popcount (unsigned int x)
+{
+  x = (x & 0x55555555) + ((x >> 1) & 0x55555555);
+  x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+  x = (x & 0x0F0F0F0F) + ((x >> 4) & 0x0F0F0F0F);
+  x = (x & 0x00FF00FF) + ((x >> 8) & 0x00FF00FF);
+  x = (x & 0x0000FFFF) + ((x >> 16) & 0x0000FFFF);
+  return x;
+}
+#endif
+
 // This function is stitched for R_BITS vector
 uint64_t
 r_bits_vector_weight(IN const r_t *in) {
 	uint64_t acc = 0;
 	for (size_t i = 0; i < (R_SIZE - 1); i++) {
-		acc += __builtin_popcount(in->raw[i]);
+		acc += popcount(in->raw[i]);
 	}
 
-	acc += __builtin_popcount(in->raw[R_SIZE - 1] & LAST_R_BYTE_MASK);
+	acc += popcount(in->raw[R_SIZE - 1] & LAST_R_BYTE_MASK);
 	return acc;
 }
 

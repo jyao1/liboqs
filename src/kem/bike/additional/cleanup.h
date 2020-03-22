@@ -13,8 +13,13 @@
 #include <string.h>
 
 /* Runs _thecleanup function on _thealloc once _thealloc went out of scope */
+#if defined(_MSC_EXTENSIONS)
+#define DEFER_CLEANUP(_thealloc, _thecleanup) \
+  _thealloc
+#else
 #define DEFER_CLEANUP(_thealloc, _thecleanup) \
   __attribute__((cleanup(_thecleanup))) _thealloc
+#endif
 
 /* Creates cleanup function for pointers from function func which accepts a
  * pointer. This is useful for DEFER_CLEANUP as it passes &_thealloc into

@@ -34,7 +34,9 @@ rotr_big(OUT syndrome_t *out, IN const syndrome_t *in, IN size_t qw_num) {
 
 _INLINE_ void
 rotr_small(OUT syndrome_t *out, IN const syndrome_t *in, IN const size_t bits) {
+#if !defined(_MSC_EXTENSIONS)
 	bike_static_assert(bits < 64, rotr_small_err);
+#endif
 	bike_static_assert(sizeof(*out) > (8 * R_QW), rotr_small_qw_err);
 
 	// Convert |bits| to 0/1 by using !!bits then create a mask of 0 or 0xffffffffff

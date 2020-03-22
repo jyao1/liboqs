@@ -14,7 +14,12 @@
 #define SUCCESS OQS_SUCCESS
 #define FAIL    OQS_ERROR
 
+#if defined(_MSC_EXTENSIONS)
+#define ret_t int
+#else
 #define ret_t int __attribute__((warn_unused_result))
+#endif
+
 #define GUARD(x)     \
   if((x) != SUCCESS) \
   return FAIL
@@ -28,6 +33,10 @@ enum _bike_err {
 };
 
 typedef enum _bike_err _bike_err_t;
+
+#if defined(__UEFI__)
+#define __thread
+#endif
 
 extern __thread _bike_err_t bike_errno;
 #define BIKE_ERROR(x) \

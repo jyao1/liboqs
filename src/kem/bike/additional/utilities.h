@@ -10,6 +10,16 @@
 
 #include "cleanup.h"
 
+#if defined(_MSC_EXTENSIONS)
+unsigned int popcount (unsigned int u);
+#else
+#define popcount __builtin_popcount
+#endif
+
+#if defined(__UEFI__)
+#define PRIx64 "lx"
+#endif
+
 #ifndef bswap_64
 #  define bswap_64(x) __builtin_bswap64(x)
 #endif

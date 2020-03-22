@@ -24,11 +24,23 @@
 #define IN
 #define OUT
 
+#if defined(_MSC_EXTENSIONS)
+#define ALIGN(n)        __declspec(align(n))
+#else
 #define ALIGN(n)        __attribute__((aligned(n)))
+#endif
 #define BIKE_UNUSED(x)  (void)(x)
+#if defined(_MSC_EXTENSIONS)
+#define BIKE_UNUSED_ATT
+#else
 #define BIKE_UNUSED_ATT __attribute__((unused))
+#endif
 
+#if defined(_MSC_EXTENSIONS)
+#define _INLINE_
+#else
 #define _INLINE_ static inline
+#endif
 
 // In asm the symbols '==' and '?' are not allowed therefore if using
 // divide_and_ceil in asm files we must ensure with static_assert its validity
