@@ -21,7 +21,7 @@
 #include "compat.h"
 #include "mzd_additional.h"
 
-#if !defined(_MSC_VER) && !defined(static_assert)
+#if !defined(_MSC_VER) && !defined(_MSC_EXTENSIONS) && !defined(static_assert)
 #define static_assert _Static_assert
 #endif
 

@@ -126,6 +126,10 @@
 #define ALIGNT(s, t) (((s) + sizeof(t) - 1) & ~(sizeof(t) - 1))
 #define ALIGNU64T(s) ALIGNT(s, uint64_t)
 
+#if defined(__UEFI__)
+#undef UNREACHABLE
+#endif
+
 /* unreachable builtin */
 #if GNUC_CHECK(4, 5) || __has_builtin(__builtin_unreachable)
 #define UNREACHABLE __builtin_unreachable()

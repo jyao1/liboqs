@@ -16,6 +16,10 @@
 
 #include "mzd_additional.h"
 
+#if defined(__UEFI__)
+#define UINT8_C UINT8
+#endif
+
 void mzd_to_char_array(uint8_t* dst, const mzd_local_t* data, size_t numbytes);
 void mzd_from_char_array(mzd_local_t* result, const uint8_t* data, size_t len);
 
@@ -31,7 +35,7 @@ static inline void setBit(uint8_t* bytes, size_t bitNumber, uint8_t val) {
 }
 
 static inline int check_padding_bits(const uint8_t byte, const unsigned int diff) {
-  return byte & ~(UINT8_C(0xff) << diff);
+  return byte & ~((UINT8_C)(0xff) << diff);
 }
 
 /* unused

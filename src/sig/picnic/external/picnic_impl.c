@@ -79,7 +79,7 @@ static bool is_unruh(const picnic_instance_t* pp) {
 
 static inline void clear_padding_bits(uint8_t* v, const unsigned int diff) {
 #if defined(WITH_LOWMC_129_129_4) || defined(WITH_LOWMC_255_255_4)
-  *v &= UINT8_C(0xff) << diff;
+  *v &= (UINT8_C)(0xff) << diff;
 #else
   (void)v;
   (void)diff;

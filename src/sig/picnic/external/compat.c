@@ -39,6 +39,11 @@
 #include <malloc.h>
 #endif
 
+#if defined(__UEFI__)
+void *uefi_aligned_malloc(size_t size, size_t alignment);
+void uefi_aligned_free(void *palignedmem);
+#endif
+
 void* aligned_alloc(size_t alignment, size_t size) {
   /* check alignment (power of 2) and size (multiple of alignment) */
   if (alignment & (alignment - 1) || size & (alignment - 1)) {
@@ -64,6 +69,8 @@ void* aligned_alloc(size_t alignment, size_t size) {
   return __mingw_aligned_malloc(size, alignment);
 #elif defined(_MSC_VER)
   return _aligned_malloc(size, alignment);
+#elif defined(__UEFI__)
+  return uefi_aligned_malloc(size, alignment);
 #else
   if (size > 0) {
     errno = ENOMEM;
@@ -79,6 +86,8 @@ void aligned_free(void* ptr) {
   __mingw_aligned_free(ptr);
 #elif defined(_MSC_VER)
   _aligned_free(ptr);
+#elif defined(__UEFI__)
+  uefi_aligned_free(ptr);
 #endif
 }
 #endif /* HAVE_ALIGNED_ALLOC */

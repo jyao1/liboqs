@@ -76,6 +76,10 @@ static inline uint64_t ATTR_CONST bswap64(uint64_t x) {
 #define HAVE_HOSTSWAP
 #endif
 
+#if defined(__UEFI__)
+#define PICNIC_IS_LITTLE_ENDIAN
+#endif
+
 #if !defined(PICNIC_IS_LITTLE_ENDIAN) && !defined(PICNIC_IS_BIG_ENDIAN)
 #if defined(BIG_ENDIAN) && defined(LITTLE_ENDIAN)
 #if defined(BYTE_ORDER) && BYTE_ORDER == BIG_ENDIAN
