@@ -15,9 +15,16 @@
 
 #define OS_WIN 1
 #define OS_NIX 2
+#define OS_UEFI 3
 
 #if defined(_WIN32) // Microsoft Windows OS
 #define OS_TARGET OS_WIN
+
+#elif defined(__UEFI__) // UEFI
+#define OS_TARGET OS_UEFI
+#ifndef _GENERIC_
+#define _GENERIC_
+#endif
 #else // included Darwin
 #define OS_TARGET OS_NIX // default to Linux
 #endif
